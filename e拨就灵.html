@@ -30,6 +30,18 @@
     if (/<\/body>/i.test(html)) return html.replace(/<\/body>/i, boot + '\n</body>');
     return html + boot;
   }
+  function patchMenuLinks(html) {
+    html = html.replace(/href=(["'])5\.6_AI助手\.html#(\d+)\1/g, 'href="#p56-$2" target="_parent"');
+    html = html.replace(/href=(["'])5\.2_群体类型分析\.html\1/g, 'href="#p52" target="_parent"');
+    html = html.replace(/href=(["'])5\.3_全量事件管理\.html\1/g, 'href="#p53" target="_parent"');
+    html = html.replace(/href=(["'])5\.5_高频事件\.html\1/g, 'href="#p55" target="_parent"');
+    html = html.replace(/href=(["'])5\.6_AI助手_移动端\.html\1/g, 'href="#p56" target="_parent"');
+    html = html.replace(/href=(["'])5\.6_AI助手\.html\1/g, 'href="#p56" target="_parent"');
+    html = html.replace(/href=(["'])5\.7_处置评价体系\.html\1/g, 'href="#p57" target="_parent"');
+    var boot = '<scr' + 'ipt>(function(){function parseMenu(href){if(!href)return null;var hash="";var q=href.indexOf("#");if(q>=0){hash=href.slice(q+1);href=href.slice(0,q);}var file=href.split("/").pop()||"";try{file=decodeURIComponent(file);}catch(e){}var table={"5.2_\u7fa4\u4f53\u7c7b\u578b\u5206\u6790.html":["p52",null],"5.3_\u5168\u91cf\u4e8b\u4ef6\u7ba1\u7406.html":["p53",null],"5.5_\u9ad8\u9891\u4e8b\u4ef6.html":["p55",null],"5.6_AI\u52a9\u624b.html":["p56",0],"5.6_AI\u52a9\u624b_\u79fb\u52a8\u7aef.html":["p56",0],"5.7_\u5904\u7f6e\u8bc4\u4ef7\u4f53\u7cfb.html":["p57",null]};var d=table[file];if(!d)return null;var sec=d[1];if(hash!==""&&/^\d+$/.test(hash))sec=parseInt(hash,10);return[d[0],sec];}document.addEventListener("click",function(e){var n=e.target;while(n&&n.tagName!=="A")n=n.parentNode;if(!n)return;var dest=parseMenu(n.getAttribute("href")||"");if(!dest)return;e.preventDefault();if(e.stopPropagation)e.stopPropagation();try{if(window.top&&typeof window.top.__ebjlGo==="function")window.top.__ebjlGo(dest[0],dest[1]);}catch(err){}},true);})();</scr' + 'ipt>';
+    if (/<\/body>/i.test(html)) return html.replace(/<\/body>/i, boot + '\n</body>');
+    return html + boot;
+  }
   function go(page, sec) {
     if (!PAGES[page]) page = 'p52';
     if (sec !== undefined && sec !== null && sec !== '') sec = parseInt(sec, 10);
@@ -56,6 +68,7 @@
       }
     }
     var html = PAGES[page];
+    html = patchMenuLinks(html);
     if (page === 'p56') html = injectAiSection(html, sec);
     frame.srcdoc = html;
     current = { page: page, sec: sec };

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=./">
+<title>页面跳转</title>
+<script>
+(function () {
+  var file = decodeURIComponent((location.pathname.split('/').pop() || ''));
+  var hash = (location.hash || '').replace(/^#/, '');
+  var map = {
+    '5.2_群体类型分析.html': 'p52',
+    '5.3_全量事件管理.html': 'p53',
+    '5.5_高频事件.html': 'p55',
+    '5.6_AI助手.html': 'p56',
+    '5.6_AI助手_移动端.html': 'p56',
+    '5.7_处置评价体系.html': 'p57'
+  };
+  var page = map[file];
+  var dest = './';
+  if (page === 'p56' && /^\d+$/.test(hash)) dest = './#p56-' + hash;
+  else if (page) dest = './#' + page;
+  location.replace(dest);
+})();
+</script>
+</head>
+<body>
+<p><a href="./">返回首页</a></p>
+</body>
+</html>
